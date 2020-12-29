@@ -1,0 +1,18 @@
+{
+    "name": "tenglin/basepack",
+    "description": "load custom tool packages through composer",
+    "authors": [
+        {
+            "name": "Tenglin",
+            "email": "tenglin@ejcms.com",
+            "homepage": "https://github.com/Mr-Tenglin/basepack"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "phpseclib/phpseclib": "~2.0"
+    },
+    "autoload":{
+        "psr-4": {"tenglin\\basepack\\": "src/"}
+    }
+}
