@@ -10,7 +10,7 @@ use Exception;
  *
  * project Url: https://github.com/spatie/array-to-xml
  *
- * use: \Tenglin\Extpack\Array2Xml::convert(array);
+ * use: \tenglin\basepack\Array2Xml::convert(array);
  *
  */
 
