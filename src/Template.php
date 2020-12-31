@@ -76,6 +76,7 @@ class Template {
 			'/php' => '*/ ?>',
 			'/*' => '<?php /*',
 			'*/' => '*/ ?>',
+			':%%' => '<?php \1; ?>',
 		];
 
 		foreach ($keys as $key => $val) {
