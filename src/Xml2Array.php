@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use DOMNamedNodeMap;
 use DOMText;
+use Exception;
 
 /**
  *
@@ -20,15 +21,19 @@ class Xml2Array {
 
 	public function __construct(string $xml) {
 		$this->document = new DOMDocument();
-		$this->document->loadXML($xml);
+		try {
+			$this->document->loadXML($xml);
+		} catch (Exception $e) {
+			error_log("tips: " . $e->getMessage());
+		}
 	}
 
-	public static function convert(string $xml): array {
+	public static function convert(string $xml): array{
 		$converter = new static(trim($xml));
 		return $converter->toArray();
 	}
 
-	protected function convertAttributes(DOMNamedNodeMap $nodeMap): ? array {
+	protected function convertAttributes(DOMNamedNodeMap $nodeMap):  ? array{
 		if ($nodeMap->length === 0) {
 			return null;
 		}
@@ -83,7 +88,7 @@ class Xml2Array {
 		return $result;
 	}
 
-	public function toArray() : array {
+	public function toArray() : array{
 		$result = [];
 		if ($this->document->hasChildNodes()) {
 			$children = $this->document->childNodes;
