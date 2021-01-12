@@ -105,7 +105,7 @@ class SQLite3DB extends \SQLite3 {
 		}
 		$this->columns = $columns;
 		$result = $this->query($this->_select($tables["table"]) . $this->_join() . $this->_where() . $this->_orderby() . $this->_limit($limit));
-		$totalCount = $this->querySingle($this->_select($tables["table"], "count(*)") . $this->_join() . $this->_where());
+		$totalCount = $this->count($tables["table"]);
 		$this->reset();
 		$callback = $this->_pageinfo($totalCount, $limit);
 		$row = [];
@@ -116,19 +116,7 @@ class SQLite3DB extends \SQLite3 {
 	}
 
 	public function count($table) {
-		if (is_array($table)) {
-			if ($table["join"]["table"]) {
-				$this->join($table["join"]["table"], $table["join"]["condition"], $table["join"]["type"]);
-			} else {
-				foreach ($table["join"] as $v) {
-					$this->join($v["table"], $v["condition"], $v["type"]);
-				}
-			}
-			$tables["table"] = $table["table"];
-		} else {
-			$tables["table"] = $table;
-		}
-		$this->querySingle($this->_select($tables["table"], "count(*)") . $this->_join() . $this->_where());
+		return $this->querySingle($this->_select($table, "count(*)") . $this->_join() . $this->_where());
 	}
 
 	public function join($table, $condition, $type = "INNER") {
