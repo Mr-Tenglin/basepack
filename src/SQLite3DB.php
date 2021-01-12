@@ -115,6 +115,22 @@ class SQLite3DB extends \SQLite3 {
 		return $row;
 	}
 
+	public function count($table) {
+		if (is_array($table)) {
+			if ($table["join"]["table"]) {
+				$this->join($table["join"]["table"], $table["join"]["condition"], $table["join"]["type"]);
+			} else {
+				foreach ($table["join"] as $v) {
+					$this->join($v["table"], $v["condition"], $v["type"]);
+				}
+			}
+			$tables["table"] = $table["table"];
+		} else {
+			$tables["table"] = $table;
+		}
+		$this->querySingle($this->_select($tables["table"], "count(*)") . $this->_join() . $this->_where());
+	}
+
 	public function join($table, $condition, $type = "INNER") {
 		$_join[] = $type . " JOIN " . $table . " ON " . $condition;
 	}
